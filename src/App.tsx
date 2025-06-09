@@ -29,6 +29,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <div className="mt-6 flex justify-center">
+        <button className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded transition">
+          Tailwind Button
+        </button>
+      </div>
     </>
   )
 }
