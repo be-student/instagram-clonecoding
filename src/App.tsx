@@ -1,9 +1,12 @@
-import { useCounterStore } from './hook/useCounterStore'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link } from 'react-router-dom';
+import { useCounterStore } from './hook/useCounterStore';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import AboutPage from './pages/AboutPage'; // Import the AboutPage
 
-function App() {
+// Define a component for the main content (previously the whole App)
+const HomePageContent = () => {
   const count = useCounterStore((state) => state.count);
   const decrement = useCounterStore((state) => state.decrement);
 
@@ -35,7 +38,22 @@ function App() {
         </button>
       </div>
     </>
-  )
+  );
+};
+
+function App() {
+  return (
+    <>
+      <nav style={{ padding: '10px', borderBottom: '1px solid #eee', marginBottom: '20px' }}>
+        <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePageContent />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
