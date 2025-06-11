@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import AboutPage from './pages/AboutPage'; // Import the AboutPage
+import LoginPage from './pages/LoginPage';
 
 // Define a component for the main content (previously the whole App)
 const HomePageContent = () => {
@@ -39,13 +40,14 @@ const HomePageContent = () => {
 function App() {
   return (
     <>
-      <nav style={{ padding: '10px', borderBottom: '1px solid #eee', marginBottom: '20px' }}>
+      {/* <nav style={{ padding: '10px', borderBottom: '1px solid #eee', marginBottom: '20px' }}>
         <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
         <Link to="/about">About</Link>
-      </nav>
+      </nav> */}
       <Routes>
         <Route path="/" element={<HomePageContent />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );
