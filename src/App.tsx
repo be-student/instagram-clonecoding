@@ -1,5 +1,6 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useCounterStore } from './hook/useCounterStore';
+import { useAuthStore } from './hook/useAuthStore';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -37,6 +38,18 @@ const HomePageContent = () => {
   );
 };
 
+// Protected route component that checks if user is logged in
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  
+  if (!isLoggedIn) {
+    // Redirect to login if not logged in
+    return <Navigate to="/login" replace />;
+  }
+  
+  return <>{children}</>;
+};
+
 function App() {
   return (
     <>
@@ -45,7 +58,11 @@ function App() {
         <Link to="/about">About</Link>
       </nav> */}
       <Routes>
-        <Route path="/" element={<HomePageContent />} />
+        <Route path="/" element={
+          <ProtectedRoute>
+            <HomePageContent />
+          </ProtectedRoute>
+        } />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
