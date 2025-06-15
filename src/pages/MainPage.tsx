@@ -7,14 +7,14 @@ import ChatButton from '../components/instagram/ChatButton';
 
 const MainPage: React.FC = () => {
   return (
-    <div className="flex bg-white min-h-screen max-w-[1440px] mx-auto font-sans">
+    <div className="flex bg-white min-h-screen max-w-[1440px] mx-auto" style={{ fontFamily: '"-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif' }}>
       {/* 좌측 사이드바 (18%) */}
       <Sidebar />
 
       {/* 메인 콘텐츠 영역 */}
-      <main className="flex-1 ml-[250px] flex justify-center py-8">
+      <main className="flex-1 ml-[250px] flex px-6 pt-8" style={{ gap: '24px' }}>
         {/* 중앙 피드 (56%) */}
-        <div className="w-[468px] px-4">
+        <div className="w-[468px]">
           {/* 스토리 섹션 */}
           <StorySection />
           
