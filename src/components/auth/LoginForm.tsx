@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import { useAuthStore } from '../../hook/useAuthStore';
 
 const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);  // Used to show success message
+  
+  const { login, isLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
 
-  const isButtonDisabled = !username || !password;
+  const isButtonDisabled = !email || !password;
+
+  useEffect(() => {
+    // Redirect to home page if already logged in
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Placeholder for login logic
-    console.log('Login attempt:', { username, password });
+    login(email, password);
+    setLoginSuccess(true);
+    console.log('Login successful:', { email, password });
+    
+    // Optional: Navigate after a short delay to show success message
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   };
 
   return (
@@ -22,8 +41,8 @@ const LoginForm: React.FC = () => {
           <Input
             type="text"
             placeholder="전화번호, 사용자 이름 또는 이메일"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             aria-label="전화번호, 사용자 이름 또는 이메일"
             className="text-xs h-9 bg-gray-50 mb-1.5"
           />
@@ -38,11 +57,17 @@ const LoginForm: React.FC = () => {
           <div className="mt-2">
             <Button 
               type="submit" 
-              disabled={isButtonDisabled} 
-              className="bg-blue-500 hover:bg-blue-600 font-bold py-1 h-8">
-              로그인
+              disabled={isButtonDisabled || loginSuccess} 
+              className="bg-blue-500 hover:bg-blue-600 font-bold py-1 h-8 flex items-center justify-center">
+              {loginSuccess ? '로그인 성공!' : '로그인'}
             </Button>
           </div>
+          
+          {loginSuccess && (
+            <div className="mt-2 text-green-600 text-xs font-semibold">
+              로그인 성공! 홈페이지로 이동합니다...
+            </div>
+          )}
         </form>
 
         <div className="flex items-center my-3">
